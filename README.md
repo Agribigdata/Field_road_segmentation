@@ -64,3 +64,4 @@ or
 ```
 python MM_wheat_GS_OD.py
 ```
+if you want to run the object detection process, you can use the implementation: https://github.com/microsoft/Swin-Transformer
