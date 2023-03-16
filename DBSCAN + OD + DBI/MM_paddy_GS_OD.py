@@ -13,11 +13,8 @@ from sklearn.metrics import f1_score, classification_report,accuracy_score, davi
 from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings('ignore')
-
-#detection_path = 'data/paddy_100-60model_result_0.1/'   #目标检测结果文件地址
-detection_path = 'detection_result/Swin_S_paddy_100/'
-#detection_path = 'detection_result/sparse_rcnn_paddy_100/'
-#detection_path = 'detection_result/dynamic_rcnn_paddy_100/'
+   
+detection_path = 'detection_result/' #目标检测结果文件地址
 segment_data_xlsx = 'data/segment_data_100/'    #原始轨迹数据excel 文件地址
 
 def detection_result():
