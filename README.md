@@ -3,7 +3,7 @@
 Data are downloaded from: https://github.com/Agribigdata/dataset_code 
 , unzipped and stored in a directory
 
-The path to the data-stored directory needs to be set to the corresponding path parameter in py file.
+The corresponding path parameter in py file  needs to be set to the data-stored directory path.
 
 # Feature extraction 
 Extracting 8-dim features and calculating point relations (for GCN)
