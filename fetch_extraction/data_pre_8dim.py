@@ -490,7 +490,7 @@ def extract_feature(result):
                 "ap": data_result_ap, "jp": data_result_jp, "br": data_result_br,"tag": data_list_tag}
     result_excel = pd.DataFrame(dict_zip)
     return result_excel
-def main(path):
+def main(path,method = "GCN"):
     if not os.path.exists(path +"_不降维//"):
         os.mkdir(path +"_不降维//")
     if not os.path.exists(path + "_计算差值降维后//"):
@@ -551,12 +551,14 @@ def main(path):
         data = pd.DataFrame(data2)
         result_excel=extract_feature(data)
         cal_diff_main(path, result_excel, allfile[q])
-        get_d1(path,result_excel,allfile[q])
-        get_t12(path,result_excel,allfile[q])
+        if method == "GCN":
+            get_d1(path,result_excel,allfile[q])
+            get_t12(path,result_excel,allfile[q])
 if __name__=="__main__":
     begin = time.time()
     #data path
     path = "xxx"
+    method = "GCN" # "DT"
     main(path)
     end = time.time()
     print(end - begin)
