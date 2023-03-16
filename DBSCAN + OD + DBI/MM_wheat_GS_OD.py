@@ -14,10 +14,7 @@ from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings('ignore')
 
-#detection_path = 'data/wheat_100-60model_result_0.1/'   #目标检测结果文件地址
-detection_path = 'detection_result/Swin_S_wheat_150/'
-#detection_path = 'detection_result/sparse_rcnn_wheat_150/'
-#detection_path = 'detection_result/dynamic_rcnn_wheat_150/'
+detection_path = 'detection_result/Swin_S_wheat_150/'   #目标检测结果文件地址
 segment_data_xlsx = 'data/segment_data_150/'    #原始轨迹数据excel 文件地址
 
 def detection_result():
