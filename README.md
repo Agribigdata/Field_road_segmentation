@@ -1,22 +1,26 @@
 
-Data downloaded from: https://github.com/Agribigdata/dataset_code 
-The path to the directory where the data is stored is written in the corresponding path in each file
+# Data preparation 
+Data are downloaded from: https://github.com/Agribigdata/dataset_code 
+, unzipped and stored in a directory
 
-# fetch extraction 
-Extracting 8dim features and calculating point relations (for GCN)
+The path to the directory where the data is stored is written in the corresponding path used in each code file
+
+# feature extraction 
+Extracting 8-dim features and calculating point relations (for GCN)
 ```
 python data_pre_8dim_and_get_relationship.py 
 ```
-Extraction feature-8dim:
+Extraction ony 8-dim features:
 ```
 python data_pre_8dim.py 
 ```
-Extraction feature-25dim:
+Extraction 25-dim features:
 ```
 python data_pre_25dim.py
 ```
 # GCN
-8-dim
+The input is 8-dim features
+
 Run:
 ```
 python GCN.py
@@ -24,19 +28,19 @@ python GCN.py
 set_t_12_d1_graph.py is the composition code and is embedded in GCN.py
 
 # LSTM
-8-dim
+The input is 8-dim features
 Run:
 ```
 python LSTM.py
 ```
 # DT
-8-dim
+If the input is 8-dim features
 Run:
 ```
 python DecisionTree_8dim.py
 ```
 # RF
-8-dim
+The input is 8-dim features
 Run:
 ```
 python RandomForest.py
