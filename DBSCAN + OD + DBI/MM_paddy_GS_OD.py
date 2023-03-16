@@ -14,8 +14,8 @@ from sklearn.model_selection import train_test_split
 import warnings
 warnings.filterwarnings('ignore')
    
-detection_path = 'detection_result/' #目标检测结果文件地址
-segment_data_xlsx = 'data/segment_data_100/'    #原始轨迹数据excel 文件地址
+detection_path = 'Object_detection_result/Swin_S_paddy_100/' #目标检测结果文件地址
+segment_data_xlsx = 'data_path/'    #原始轨迹数据excel 文件地址
 
 def detection_result():
     #获取目标检测的 txt 结果文件
