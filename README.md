@@ -25,7 +25,7 @@ Run:
 ```
 python GCN.py
 ```
-Notice that set_t_12_d1_graph.py is the composition code and is embedded in GCN.py
+Notice that set_t_12_d1_graph.py is the building graph code and is embedded in GCN.py
 
 # LSTM
 The input is 8-dim features
