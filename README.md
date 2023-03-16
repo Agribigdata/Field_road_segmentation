@@ -3,7 +3,7 @@
 Data are downloaded from: https://github.com/Agribigdata/dataset_code 
 , unzipped and stored in a directory
 
-The path to the directory where the data is stored is written in the corresponding path used in each code file
+The path to the data-stored directory needs to be set to the corresponding path parameter in py file.
 
 # feature extraction 
 Extracting 8-dim features and calculating point relations (for GCN)
@@ -25,7 +25,7 @@ Run:
 ```
 python GCN.py
 ```
-set_t_12_d1_graph.py is the composition code and is embedded in GCN.py
+Notice that set_t_12_d1_graph.py is the composition code and is embedded in GCN.py
 
 # LSTM
 The input is 8-dim features
