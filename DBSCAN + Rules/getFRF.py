@@ -21,7 +21,7 @@ import main as ma
 def getroad2field(clusteringcopy, q, allsegment, alldir, allspeed, allerrorpoint, allslope,cleanx,cleany,newrowtag,speedcha,dirthreshold,dirnumthreshold):
 
     # 第一次田路田segment修改参数
-    clustering = clusteringcopy
+    clustering = clusteringcopy.copy()
     newallsegment = []
     newalldir = []
     newsegmentlabal = []
@@ -39,7 +39,7 @@ def getroad2field(clusteringcopy, q, allsegment, alldir, allspeed, allerrorpoint
         numtian = 0
         numroad = 0
         for j in range(len(newallsegment[i])):
-            if clustering.labels_[newallsegment[i][j]] == 0:
+            if clustering[newallsegment[i][j]] == 0:
                 numroad = numroad + 1
             else:
                 numtian = numtian + 1
@@ -65,5 +65,5 @@ def getroad2field(clusteringcopy, q, allsegment, alldir, allspeed, allerrorpoint
                 if dirsamenum >= dirnumthreshold:
                     if newallerrorpoint[i] != 0:
                         for j in range(len(newallsegment[i])):#将符合条件的进行修正标签
-                            clustering.labels_[newallsegment[i][j]]=1
-    return clustering
+                            clustering[newallsegment[i][j]]=1
+    return clusteringcopy

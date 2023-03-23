@@ -14,48 +14,51 @@ import multiprocessing
 from time import time
 from datetime import datetime, date
 import heapq
+import os
 
 print('loading data...\n')
 #加载清理好的数据
 #data1作为pands读取数据的中间转换
 picture_index=0 #加载轨迹的index
-data1 = pd.read_excel("agricultural machinery/data/cleandata" + str(picture_index + 1) + ".xlsx", header=0)
-cleandata = data1.loc[:,
-               ['ID', 'GEARSTIME', 'LNG', 'LAT', 'SPEED', 'DIRECTION', 'HIGHT', 'GPSLOCATION', 'ACCSTATE',
-                'GOOGLE_LNG', 'GOOGLE_LAT', 'BAIDU_LAT', 'BAIDU_LNG']]
+# 读取数据文件
+allfile = []
+top_path = 'DBSCAN_test_不降维/'
+for filepath, dirnames, filenames in os.walk(top_path):
+    for filename in filenames:
+        allfile.append(filename)
+print('allfile:', allfile)
+fileindex = 80
+file_path = 'paddy_harvestor_76.xlsx'
+data1 = pd.read_excel(top_path + file_path, header=0)
+#lon	lat	time	dir	vin	speed	ap	jp	br	tag
+cleandata = data1.loc[:, ['time', 'lon', 'lat', 'speed', 'dir', 'tag']]
 #根据算法需要读取清洗好数据的属性
-clean_x = cleandata['LNG']
-clean_y = cleandata['LAT']
-clean_speed = cleandata['SPEED']
-clean_id = cleandata['ID']
-direct = cleandata['DIRECTION']
+clean_x = cleandata['lon']
+clean_y = cleandata['lat']
+clean_speed = cleandata['speed']
+direct = cleandata['dir']
+newrow_tag = cleandata['tag'].tolist()
+clean_id = []
+for m in range(len(direct)):
+    clean_id.append(m)
 #读取源数据属性
-data4 = pd.read_excel("origindata/data/data" + str(picture_index + 1) + ".xlsx", header=0)
-oridata = data4.loc[:, ['ID', 'GEARSTIME', 'LNG', 'LAT', 'SPEED']]
-origindata_time = oridata['GEARSTIME']
-origindata_id = oridata['ID']
-origindata_x = oridata['LNG']
-origindata_y = oridata['LAT']
-origindata_speed = oridata['SPEED']
+data4 = pd.read_excel(top_path + file_path, header=0)
+oridata = data4.loc[:, ['time', 'lon', 'lat', 'speed']]
+origindata_time = oridata['time']
+origindata_x = oridata['lon']
+origindata_y = oridata['lat']
+origindata_speed = oridata['speed']
+origindata_id = clean_id
 
 #读取标注数据标签 road=0 field=1
-data3 = pd.read_excel("agricultural machinery/labal/" + "labal" + str(picture_index + 1) + ".xlsx", header=0)
-datarow_Tag = data3.loc[:, ['ID', 'Tag']]
-origin_id = datarow_Tag['ID']
-origin_tag = datarow_Tag['Tag']
+data3 = pd.read_excel(top_path + file_path, header=0)
+origin_id = clean_id
+origin_tag = newrow_tag
 #做源数据与清洗数据的标签对应，origin_id代表原始数据的id，origin_tag原始数据的标签,newrow_tag代表对应成功之后新数据的标签
 rowid = origin_id
 rowtag = origin_tag
-newrow_tag = []
-newrow_id = []
-rowid = list(rowid)
+newrow_id = clean_id
 dbscantid = clean_id
-dbscantid = list(dbscantid)
-for j in range(len(rowid)):
-    if rowid[j] in dbscantid:
-        if rowid[j] not in newrow_id:
-            newrow_tag.append(rowtag[j])
-            newrow_id.append(rowid[j])
 #做标签转换，用来计算道路的识别准确率 road=1 field=0
 turn_newrowtag = []
 for j in range(len(newrow_tag)):

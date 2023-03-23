@@ -21,11 +21,13 @@ if __name__ == '__main__':
     print('cluster...\n')
     picture_index=0
     print('cluster2road...\n')
-    clustering = ctr.cluster2road(picture_index, parm.c2r_base, parm.c2r_ratio, parm.c2r_diff, parm.c2r_dir_num, lddata.direct, fieldDir.segment_field_direction, db.clustering)
+
+    clustering = db.clustering
+
+    clustering = ctr.cluster2road(picture_index, parm.c2r_base, parm.c2r_ratio, parm.c2r_diff, parm.c2r_dir_num, lddata.direct, fieldDir.segment_field_direction, clustering)
 
 
-    allsegment, alldir, allspeed, allerrorpoint, allslope = getseg.getfirstsegment(picture_index, clustering, lddata.clean_x,lddata.clean_y, lddata.direct,
-                                                                          lddata.origindata_time, lddata.origindata_id,lddata.origindata_x, lddata.origindata_y,lddata.origindata_speed)
+    allsegment, alldir, allspeed, allerrorpoint, allslope = getseg.getfirstsegment(picture_index, clustering, lddata.clean_x,lddata.clean_y, lddata.direct, lddata.origindata_time, lddata.origindata_id,lddata.origindata_x, lddata.origindata_y,lddata.origindata_speed)
 
     print('FRF...\n')
     clustering = frf.getroad2field(clustering,picture_index, allsegment, alldir, allspeed, allerrorpoint, allslope,lddata.clean_x,lddata.clean_y,lddata.newrow_tag,parm.FRF_speedcha,parm.FRF_dirthreshold,parm.FRF_dirnumthreshold)

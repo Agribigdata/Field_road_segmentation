@@ -30,8 +30,8 @@ def getfirstsegment(q, clusteringcopy, cleanx, cleany, direct, origindatatime, o
     onesegment = []
     onesegment.append(0)
     flag = 0
-    for i in range(1, len(clustering.labels_)):
-        if clustering.labels_[i] == clustering.labels_[i - 1]:
+    for i in range(1, len(clustering)):
+        if clustering[i] == clustering[i - 1]:
             onesegment.append(i)
             flag = 1
         else:

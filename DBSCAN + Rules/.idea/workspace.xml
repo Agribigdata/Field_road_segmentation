@@ -26,6 +26,11 @@
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
   </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="F:\python\DirDist-DBSCAN_Kfold" />
+    </key>
+  </component>
   <component name="RunManager">
     <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="DirDist-DBSCAN" />
@@ -67,6 +72,11 @@
       <updated>1604197113010</updated>
       <workItem from="1604197120534" duration="5690000" />
       <workItem from="1604217382618" duration="1648000" />
+      <workItem from="1679380269883" duration="114000" />
+      <workItem from="1679380477766" duration="3558000" />
+      <workItem from="1679534728877" duration="23000" />
+      <workItem from="1679554611656" duration="1682000" />
+      <workItem from="1679558815422" duration="6498000" />
     </task>
     <servers />
   </component>
@@ -74,32 +84,29 @@
     <option name="version" value="1" />
   </component>
   <component name="WindowStateProjectService">
-    <state width="1877" height="364" key="GridCell.Tab.0.bottom" timestamp="1604219054677">
+    <state x="740" y="275" key="FileChooserDialogImpl" timestamp="1679534749320">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="364" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1604219054677" />
-    <state width="1877" height="364" key="GridCell.Tab.0.center" timestamp="1604219054677">
+    <state x="740" y="275" key="FileChooserDialogImpl/1920.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1679534749320" />
+    <state width="1877" height="606" key="GridCell.Tab.0.bottom" timestamp="1679575176785">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="364" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1604219054677" />
-    <state width="1877" height="364" key="GridCell.Tab.0.left" timestamp="1604219054677">
+    <state width="1877" height="606" key="GridCell.Tab.0.bottom/1920.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1679575176785" />
+    <state width="1877" height="606" key="GridCell.Tab.0.center" timestamp="1679575176784">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="364" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1604219054677" />
-    <state width="1877" height="364" key="GridCell.Tab.0.right" timestamp="1604219054677">
+    <state width="1877" height="606" key="GridCell.Tab.0.center/1920.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1679575176784" />
+    <state width="1877" height="606" key="GridCell.Tab.0.left" timestamp="1679575176784">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="364" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1604219054677" />
-    <state x="463" y="165" key="SettingsEditor" timestamp="1604197248387">
+    <state width="1877" height="606" key="GridCell.Tab.0.left/1920.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1679575176784" />
+    <state width="1877" height="606" key="GridCell.Tab.0.right" timestamp="1679575176785">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="463" y="165" key="SettingsEditor/0.0.1920.1040@0.0.1920.1040" timestamp="1604197248387" />
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup" timestamp="1604202662803">
-      <screen x="0" y="0" width="1920" height="1040" />
-    </state>
-    <state x="623" y="225" width="672" height="678" key="search.everywhere.popup/0.0.1920.1040@0.0.1920.1040" timestamp="1604202662803" />
+    <state width="1877" height="606" key="GridCell.Tab.0.right/1920.0.1080.1880/0.0.1920.1040@0.0.1920.1040" timestamp="1679575176785" />
   </component>
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
-    <SUITE FILE_PATH="coverage/DirDist_DBSCAN$main.coverage" NAME="main Coverage Results" MODIFIED="1604219054677" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DirDist_DBSCAN_Kfold$main.coverage" NAME="main Coverage Results" MODIFIED="1679575103738" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/DirDist_DBSCAN$main.coverage" NAME="main Coverage Results" MODIFIED="1679380278102" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

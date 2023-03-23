@@ -40,7 +40,7 @@ def getsameroad(clusteringcopy, q, allsegment, alldir, allspeed, allerrorpoint, 
         numtian = 0 #统计某段轨迹中为田的点数 ，做轨迹标签使用
         numroad = 0 #统计某段轨迹中为路的点数
         for j in range(len(newallsegment[i])):
-            if clustering.labels_[newallsegment[i][j]] == 0:
+            if clustering[newallsegment[i][j]] == 0:
                 numroad = numroad + 1
             else:
                 numtian = numtian + 1
@@ -68,8 +68,8 @@ def getsameroad(clusteringcopy, q, allsegment, alldir, allspeed, allerrorpoint, 
                             roadsamedir += 1
                 if roadsamedir >= dirnumthreshold:
                     for j in range(len(newallsegment[i - 1])):
-                        clustering.labels_[newallsegment[i - 1][j]] = 1
+                        clustering[newallsegment[i - 1][j]] = 1
                     for j in range(len(newallsegment[i])):
-                        clustering.labels_[newallsegment[i][j]] = 1
+                        clustering[newallsegment[i][j]] = 1
                     for j in range(len(newallsegment[i + 1])):
-                        clustering.labels_[newallsegment[i + 1][j]] = 1
+                        clustering[newallsegment[i + 1][j]] = 1

@@ -17,7 +17,7 @@ from datetime import datetime, date
 import heapq
 
 def cluster2road(q, jishu, bilv, chazhi, dirnum, direct, alltian, clusteringcopy):
-
+    clustering2 = clusteringcopy.labels_.copy()
     clustering = clusteringcopy
     #统计轨迹中每块农田的具体方向分布
     segment_field = [0 for j in range(len(clustering.labels_))]
@@ -63,8 +63,5 @@ def cluster2road(q, jishu, bilv, chazhi, dirnum, direct, alltian, clusteringcopy
             for h in range(len(alltian)):
                 if (float(dir[ind]) > (float(alltian[h]) - dirnum) and float(dir[ind]) < (float(alltian[h]) + dirnum)):
                     flag = 1
-            if flag == 0:
-                clustering.labels_[record_field_road_border[i][j]] = 0
 
-    clusteringcopy = clustering
-    return clusteringcopy
+    return clustering2
