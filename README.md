@@ -22,16 +22,26 @@ python data_pre_25dim.py
 The input is 8-dim features
 
 Run:
+train:
 ```
-python GCN.py
+python GCN_train.py
+```
+test:
+```
+python GCN_test.py
 ```
 Notice that set_t_12_d1_graph.py is the building graph code and is embedded in GCN.py
 
 # LSTM
 The input is 8-dim features
 Run:
+train:
 ```
-python LSTM.py
+python LSTM_train.py
+```
+test:
+```
+python LSTM_test.py
 ```
 # DT
 If the input is 8-dim features

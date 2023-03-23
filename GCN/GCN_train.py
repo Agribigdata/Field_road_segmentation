@@ -38,8 +38,6 @@ def evaluate(model,loader,flag):
     global final_indice,final_y
     model.eval()
     correct_all=[]
-    list_indice = []
-    list_y = []
     with torch.no_grad():
         for data in loader:
             logits=model(data)
@@ -48,11 +46,6 @@ def evaluate(model,loader,flag):
             correct=torch.sum(indices==y)
             final_corr=correct.item()*1.0/len(y)
             correct_all.append(final_corr)
-            list_indice.append(indices.cpu().numpy())
-            list_y.append(y.cpu().numpy())
-        if flag=="test":
-            final_indice+=list_indice
-            final_y+=list_y
         return mean(correct_all)
 def train(model,optimizer,criterion,train_data,val_data,randomstate):
     best_val_acc=0
@@ -99,18 +92,12 @@ if __name__=="__main__":
     path = "xxxx"
     for randomstate in range(kfold):
         print(randomstate)
-    #randomstate=2021
         # spilt_data(fin_path, randomstate)
         torch.manual_seed(0)
         #在这里进行做图，将训练数据、测试数据、验证数据各自构成loader
         train_data = settd.getloader(path, randomstate,"train")
-        test_data = settd.getloader(path,  randomstate, "test")
         val_data = settd.getloader(path, randomstate, "val")
         train(model,optimizer,criterion,train_data,val_data,str(randomstate))
-        model.load_state_dict(torch.load('save_model/'+str(randomstate)+'xxx.pth'))
-        evaluate(model,test_data,flag="test")
-        #model.zero_grad()
-        #optimizer.zero_grad()
         model = Net().to(DEVICE)  # 如果gpu>1 用DataParallel()包裹 单机多卡 数据并行
         criterion = nn.CrossEntropyLoss().to(DEVICE)  # 多分类交叉熵损失
         optimizer = torch.optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DACAY)  # Adam优化器

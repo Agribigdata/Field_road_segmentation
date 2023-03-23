@@ -14,82 +14,9 @@ import warnings
 import shutil
 warnings.filterwarnings("ignore")
 batch_size = 128
-input_size = 8 #input_size / image width
 step=512
-NUM_EPOCHS = 100
-LEARNING_RATE = 1e-3
-WEIGHT_DECAY = 1e-4
 
 def get_loader(path):
-    train_filename=os.listdir(path+"train")
-    train=pd.DataFrame(columns=['vin','speed','ap','jp','br','lon_diff','lat_diff', 'dir_diff','tag'])
-    for file in train_filename:
-        data=pd.read_excel(path+"train/"+file)
-        train=train.append(data)
-    train_x=[]
-    for i in range(len(train['speed'])):
-        #temp_train =list(train.iloc[i,[0,1,2,3,4,5,6,7]])
-        temp_train = list(train.iloc[i, [3,4,5,6,7,9,10,11]])
-        train_x.append(temp_train)
-    if len(train_x)%step!=0:
-        shortage=len(train_x)%step
-        padding=step-shortage
-        #print(padding)
-        temp_train = [0,0,0,0,0,0,0,0]
-        for j in range(padding):
-            train_x.append(temp_train)
-    train_x= [train_x[i:i+step] for i in range(0,len(train_x),step)]
-    train_data = np.array(train_x)
-
-
-    train_tag=[]
-    for i in range(len(train['speed'])):
-        temp_tag =list(train.iloc[i,[8]])
-        train_tag+=temp_tag
-    if len(train_tag)%step!=0:
-        shortage=len(train_tag)%step
-        padding=step-shortage
-        #print(padding)
-        temp_train = [0]
-        for j in range(padding):
-            train_tag+=temp_train
-    train_tag= [train_tag[i:i+step] for i in range(0,len(train_tag),step)]
-    train_tag = np.array(train_tag)
-    val_filename=os.listdir(path+"val")
-    val=pd.DataFrame(columns=['vin','speed','ap','jp','br','lon_diff','lat_diff', 'dir_diff','tag'])
-    for file in val_filename:
-        data=pd.read_excel(path+"val/"+file)
-        val=val.append(data)
-    dev=[]
-    for i in range(len(val['speed'])):
-        temp_dev =list(val.iloc[i,[3,4,5,6,7,9,10,11]])
-        dev.append(temp_dev)
-    if len(dev)%step!=0:
-        shortage=len(dev)%step
-        padding=step-shortage
-        #print(padding)
-        temp_dev = [0,0,0,0,0,0,0,0]
-        for j in range(padding):
-            dev.append(temp_dev)
-    dev= [dev[i:i+step] for i in range(0,len(dev),step)]
-    #dev_data = torch.tensor(np.array(dev),dtype=torch.float32)
-    dev_data=np.array(dev)
-    #提取验证集标签
-    dev_tag=[]
-    for i in range(len(val['speed'])):
-        temp_tag =list(val.iloc[i,[8]])
-        dev_tag+=temp_tag
-    if len(dev_tag)%step!=0:
-        shortage=len(dev_tag)%step
-        padding=step-shortage
-        #print(padding)
-        temp_dev = [0]
-        for j in range(padding):
-            dev_tag+=temp_dev
-    dev_tag= [dev_tag[i:i+step] for i in range(0,len(dev_tag),step)]
-    dev_tag = np.array(dev_tag)
-
-
     test_filename=os.listdir(path+"test")
     test=pd.DataFrame(columns=['vin','speed','ap','jp','br','lon_diff','lat_diff', 'dir_diff','tag'])
     for file in test_filename:
@@ -124,56 +51,24 @@ def get_loader(path):
     test_tag= [test_tag[i:i+step] for i in range(0,len(test_tag),step)]
     test_tag = np.array(test_tag)
 
-    train_data=torch.tensor(train_data,dtype=torch.float32)
-    train_tag=torch.tensor(train_tag)
-    dev_data=torch.tensor(dev_data,dtype=torch.float32)
-    dev_tag=torch.tensor(dev_tag)
     test_data=torch.tensor(test_data,dtype=torch.float32)
     test_tag=torch.tensor(test_tag)
-
-    train_dataset=Data.TensorDataset(train_data, train_tag)
-    dev_dataset=Data.TensorDataset(dev_data, dev_tag)
     test_dataset=Data.TensorDataset(test_data, test_tag)
 
-    train_loader = Data.DataLoader(dataset=train_dataset,batch_size=batch_size,shuffle=True)
-    dev_loader = Data.DataLoader(dataset=dev_dataset,batch_size=batch_size,shuffle=True)
     test_loader = Data.DataLoader(dataset=test_dataset,batch_size=batch_size,shuffle=False)
-    return train_loader,dev_loader,test_loader
+    return test_loader
 
 
 DEVICE = "cuda:1"
-model =single_LSTM(embedding_size=8, hidden_size=128, num_layers=1)
-model = model.cuda()
-optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay = WEIGHT_DECAY)
-criteon = nn.CrossEntropyLoss()
-
 final_indice=[]
 final_y=[]
 
 f_pred=[]
 f_true=[]
-def train(model,optimizer,train_loader):
-    avg_loss = []
-    model.train()
-    for batch in train_loader:
-        b_input_ids, b_labels = batch[0].cuda(), batch[1].cuda()           #shape均为[batch, intervals]
-        #output = model(b_input_ids, b_labels)           #.forward_with_crf
-        output = model(b_input_ids, b_labels)  # .forward_with_crf
-        loss, logits = output[0], output[1]             #logits.shape = [batch, intervals, 2]
-        avg_loss.append(loss.cpu().detach().numpy().item())
-        #avg_loss.append(loss[0].cpu().detach().numpy().item())
-        optimizer.zero_grad()
-        loss.backward()
-        optimizer.step()
-    avg_loss = np.array(avg_loss).mean()
-    print('train_loss:',avg_loss)
-def evaluate(model,loader,flag):
+def evaluate(model,loader):
     # global final_indice,final_y
     model.eval()
     val_loss=[]
-    # correct_all = []
-    # true_label = []
-    # pred_label = []
     with torch.no_grad():
         for batch in loader:
             b_input_ids, b_labels = batch[0].cuda(), batch[1].cuda()  # shape均为[batch, intervals]
@@ -181,27 +76,12 @@ def evaluate(model,loader,flag):
             loss, logit = output[0], output[1]
             val_loss.append(loss.cpu().detach().numpy().item())
             _,logits = torch.max(logit, dim=2)
-            # pred_label.append(logits.cpu().numpy())
-            # true_label.append(b_labels.cpu().numpy())
-            if flag=="test":
-                f_pred.append(np.concatenate(logits.cpu().numpy()))
-                f_true.append(np.concatenate(b_labels.cpu().numpy()))
-                final_indice.append(np.concatenate(logits.cpu().numpy()))
-                final_y.append(np.concatenate(b_labels.cpu().numpy()))
-        # acc = accuracy_score(np.concatenate(true_label), np.concatenate(pred_label))
+            f_pred.append(np.concatenate(logits.cpu().numpy()))
+            f_true.append(np.concatenate(b_labels.cpu().numpy()))
+            final_indice.append(np.concatenate(logits.cpu().numpy()))
+            final_y.append(np.concatenate(b_labels.cpu().numpy()))
         loss=np.array(val_loss).mean()
         return loss
-def train_begin(train_loader,dev_loader):
-    max_val_f1=100000000000
-    for epoch in range(NUM_EPOCHS):
-        print("Epoch {}/{}".format(epoch + 1, NUM_EPOCHS))
-        train(model, optimizer,train_loader)                        #, train_acc
-        loss = evaluate(model, dev_loader,"val")
-        print('val loss = ', loss)
-        if loss < max_val_f1:
-            max_val_f1 = loss
-            torch.save(model.state_dict(), 'save_model/'+str(randomstate)+'paddy_single_lstm_8.pth')
-        print('beat loss = ', max_val_f1)
 '''
 def pre_true_ground():
     model.load_state_dict(torch.load('save_model/用来预测的model/best_acc_lstm_600_wheat_exchange_220.pth'))
@@ -285,23 +165,15 @@ if __name__=="__main__":
     test_weight_f1score = 0
     lenset=kfold
     for randomstate in range(kfold):
-        # randomstate=2021
         print(randomstate)
         #10fold data path
         path = 'xxxx'+str(randomstate)+"/"
         # spilt_data(path, randomstate)
-        train_loader,dev_loader,test_loader=get_loader(path)
-        train_begin(train_loader,dev_loader)
+        test_loader=get_loader(path)
         model.load_state_dict(torch.load('save_model/'+str(randomstate)+'paddy_single_lstm_8.pth'))
-        evaluate(model,test_loader,"test")
-        model.zero_grad()
-        optimizer.zero_grad()
-        model = single_LSTM(embedding_size=8, hidden_size=128, num_layers=1).cuda()
-        optimizer = optim.Adam(model.parameters(), lr=LEARNING_RATE, weight_decay=WEIGHT_DECAY)
-        criteon = nn.CrossEntropyLoss()
+        evaluate(model,test_loader)
         y_final=np.concatenate(final_y)
         indice_final=np.concatenate(final_indice)
-        # print(classification_report(y_final, indice_final,digits=4,output_dict=True)['accuracy'])
         accuracy_score_list.append(classification_report(y_final, indice_final,digits=4,output_dict=True)['accuracy'])
         test_road_precision += classification_report(y_final, indice_final, digits=4, output_dict=True)['0']['precision']
         test_road_recall += classification_report(y_final, indice_final, digits=4, output_dict=True)['0']['recall']
